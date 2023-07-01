@@ -1,5 +1,6 @@
 package com.devthalys.personalfinancemanager.models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -12,12 +13,14 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "expenses")
-public class ExpensesModel {
+public class ExpensesModel implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,5 +42,78 @@ public class ExpensesModel {
 	private String expensesDescription;
 	
 	@ManyToOne
+	@JoinColumn(name = "user_id")
 	private UserModel user;
+	
+	public ExpensesModel() {}
+
+	public ExpensesModel(UUID idExpenses, String expensesName, ExpensesCategory expensesCategory, float expensesValue,
+			LocalDateTime expensesDate, String expensesDescription, UserModel user) {
+		super();
+		this.idExpenses = idExpenses;
+		this.expensesName = expensesName;
+		this.expensesCategory = expensesCategory;
+		this.expensesValue = expensesValue;
+		this.expensesDate = expensesDate;
+		this.expensesDescription = expensesDescription;
+		this.user = user;
+	}
+
+	public UUID getIdExpenses() {
+		return idExpenses;
+	}
+
+	public void setIdExpenses(UUID idExpenses) {
+		this.idExpenses = idExpenses;
+	}
+
+	public String getExpensesName() {
+		return expensesName;
+	}
+
+	public void setExpensesName(String expensesName) {
+		this.expensesName = expensesName;
+	}
+
+	public ExpensesCategory getExpensesCategory() {
+		return expensesCategory;
+	}
+
+	public void setExpensesCategory(ExpensesCategory expensesCategory) {
+		this.expensesCategory = expensesCategory;
+	}
+
+	public float getExpensesValue() {
+		return expensesValue;
+	}
+
+	public void setExpensesValue(float expensesValue) {
+		this.expensesValue = expensesValue;
+	}
+
+	public LocalDateTime getExpensesDate() {
+		return expensesDate;
+	}
+
+	public void setExpensesDate(LocalDateTime expensesDate) {
+		this.expensesDate = expensesDate;
+	}
+
+	public String getExpensesDescription() {
+		return expensesDescription;
+	}
+
+	public void setExpensesDescription(String expensesDescription) {
+		this.expensesDescription = expensesDescription;
+	}
+
+	public UserModel getUser() {
+		return user;
+	}
+
+	public void setUser(UserModel user) {
+		this.user = user;
+	}
+	
+	
 }

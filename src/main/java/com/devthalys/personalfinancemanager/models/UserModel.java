@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,12 +37,10 @@ public class UserModel implements Serializable {
 	@Column
 	private float wallet;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ExpensesModel> expenses;
 
-	public UserModel() {
-		
-	}
+	public UserModel() {}
 
 	public UserModel(UUID idUser, String firstName, String lastName, int age, String cpf, float wallet) {
 		super();

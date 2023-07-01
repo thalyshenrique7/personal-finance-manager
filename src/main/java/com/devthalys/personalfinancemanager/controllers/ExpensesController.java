@@ -1,6 +1,7 @@
 package com.devthalys.personalfinancemanager.controllers;
 
-import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,28 +12,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devthalys.personalfinancemanager.models.UserModel;
-import com.devthalys.personalfinancemanager.services.UserServiceImpl;
-
-import jakarta.transaction.Transactional;
+import com.devthalys.personalfinancemanager.models.ExpensesModel;
+import com.devthalys.personalfinancemanager.services.ExpensesServiceImpl;
 
 @RestController
-@RequestMapping(value = "/users")
-public class UserController {
+@RequestMapping(value = "/expenses")
+public class ExpensesController {
 
 	@Autowired
-	private UserServiceImpl userServiceImpl;
+	private ExpensesServiceImpl expensesServiceImpl;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public List<UserModel> findAll(){
-		return userServiceImpl.findAll();
+	public Optional<ExpensesModel> findById(UUID id) {
+		return expensesServiceImpl.findById(id);
 	}
 	
-	@Transactional
 	@RequestMapping(value = "/save", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
-	public void save(@RequestBody UserModel user) {
-		userServiceImpl.save(user);
+	public void save(@RequestBody ExpensesModel expenses) {
+		expensesServiceImpl.save(expenses);
 	}
 }
