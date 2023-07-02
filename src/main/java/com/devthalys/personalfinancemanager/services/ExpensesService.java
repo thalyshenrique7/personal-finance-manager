@@ -12,5 +12,5 @@ public interface ExpensesService {
 
 	public Optional<ExpensesModel> findById(UUID id);
 	
-	public void save(ExpensesModel expenses);
+	public void saveExpenses(ExpensesModel expenses);
 }
