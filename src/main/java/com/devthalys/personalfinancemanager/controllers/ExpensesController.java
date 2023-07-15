@@ -1,5 +1,6 @@
 package com.devthalys.personalfinancemanager.controllers;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -24,6 +25,12 @@ public class ExpensesController {
 
 	@Autowired
 	private ExpensesServiceImpl expensesServiceImpl;
+	
+	@RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public List<ExpensesModel> findAll(){
+		return expensesServiceImpl.findAll();
+	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
