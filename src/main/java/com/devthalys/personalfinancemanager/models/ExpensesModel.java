@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import com.devthalys.personalfinancemanager.enums.ExpensesCategory;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,7 +35,13 @@ public class ExpensesModel implements Serializable {
 	private ExpensesCategory expensesCategory;
 	
 	@Column
+	private float limitToSpending;
+	
+	@Column
 	private float expensesValue;
+	
+	@Column
+	private float totalExpenses;
 	
 	@Column
 	private LocalDateTime expensesDate;
@@ -43,6 +51,7 @@ public class ExpensesModel implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
+	@JsonBackReference
 	private UserModel user;
 	
 	public ExpensesModel() {}
@@ -114,6 +123,21 @@ public class ExpensesModel implements Serializable {
 	public void setUser(UserModel user) {
 		this.user = user;
 	}
-	
+
+	public float getLimitToSpending() {
+		return limitToSpending;
+	}
+
+	public void setLimitToSpending(float limitToSpending) {
+		this.limitToSpending = limitToSpending;
+	}
+
+	public float getTotalExpenses() {
+		return totalExpenses;
+	}
+
+	public void setTotalExpenses(float totalExpenses) {
+		this.totalExpenses = totalExpenses;
+	}
 	
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devthalys.personalfinancemanager.dtos.AddWalletDTO;
 import com.devthalys.personalfinancemanager.dtos.UserDTO;
 import com.devthalys.personalfinancemanager.exceptions.UserNotFoundException;
 import com.devthalys.personalfinancemanager.models.UserModel;
@@ -77,13 +78,24 @@ public class UserController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void update(@PathVariable String cpf, @RequestBody @Valid UserDTO userDto) {
 		UserModel findCpf = userServiceImpl.getUserByCpf(cpf);
-				
+
 		findCpf.setFirstName(userDto.getFirstName());
 		findCpf.setLastName(userDto.getLastName());
 		findCpf.setAge(userDto.getAge());
 		findCpf.setCpf(userDto.getCpf());
 		findCpf.setWallet(userDto.getWallet());
-		
+
+		userServiceImpl.update(findCpf);
+	}
+	
+	@Transactional
+	@RequestMapping(value = "/update/wallet/{cpf}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void updateWallet(@PathVariable String cpf, @RequestBody @Valid AddWalletDTO userWallet) {
+		UserModel findCpf = userServiceImpl.getUserByCpf(cpf);
+
+		findCpf.setAddValueToWallet(userWallet.addValueToWallet());
+
 		userServiceImpl.update(findCpf);
 	}
 }

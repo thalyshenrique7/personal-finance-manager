@@ -46,6 +46,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public void update(UserModel user) {
+		addWallet(user);
 		userRepository.save(user);	
 	}
 
@@ -54,4 +55,14 @@ public class UserServiceImpl implements UserService {
 		return userRepository.existsUserByCpf(cpf);
 	}
 
+	public void addWallet(UserModel user) {
+		float currentWallet = user.getWallet();
+		float walletValue = user.getAddValueToWallet();
+		
+		user.setAddValueToWallet(walletValue);
+		
+		float newValueToWallet = currentWallet + walletValue;
+		
+		user.setWallet(newValueToWallet);
+	}
 }

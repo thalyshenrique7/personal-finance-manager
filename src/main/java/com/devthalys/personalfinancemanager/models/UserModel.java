@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -37,7 +40,12 @@ public class UserModel implements Serializable {
 	@Column
 	private float wallet;
 	
+	@Column(nullable = true)
+	@JsonIgnore
+	private float addValueToWallet;
+	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	
 	private List<ExpensesModel> expenses;
 
 	public UserModel() {}
@@ -100,4 +108,21 @@ public class UserModel implements Serializable {
 		this.wallet = wallet;
 	}
 
+	public float getAddValueToWallet() {
+		return addValueToWallet;
+	}
+
+	public void setAddValueToWallet(float addValueToWallet) {
+		this.addValueToWallet = addValueToWallet;
+	}
+
+	public List<ExpensesModel> getExpenses() {
+		return expenses;
+	}
+
+	public void setExpenses(List<ExpensesModel> expenses) {
+		this.expenses = expenses;
+	}
+
+	
 }

@@ -23,6 +23,7 @@ public class ExpensesServiceImpl implements ExpensesService {
 	private static Logger logger = LoggerFactory.getLogger(PersonalFinanceManagerApplication.class);
 
 	private final String USER_NOT_FOUND = "User not found";
+	private final String LIMIT_EXCEEDED = "Limit spending to category exceeded!";
 
 	@Autowired
 	private ExpensesRepository expensesRepository;
@@ -53,13 +54,28 @@ public class ExpensesServiceImpl implements ExpensesService {
 		expensesRepository.save(expenses);
 	}
 
+	@Override
+	public void updateExpenses(ExpensesModel expenses) {
+		calculateWalletToExpenses(expenses, expenses.getUser());
+		limitSpendingToCategory(expenses);
+		expensesRepository.save(expenses);
+	}
+
 	public void calculateWalletToExpenses(ExpensesModel expenses, UserModel user) {
 		ExpensesCategory category = expenses.getExpensesCategory();
-		float walletAtual = user.getWallet();
+		float currentWallet = user.getWallet();
 
 		for (ExpensesCategory cat : category.values()) {
-			float totalWallet = walletAtual - expenses.getExpensesValue();
+			float totalWallet = currentWallet - expenses.getExpensesValue();
 			user.setWallet(totalWallet);
+		}
+	}
+
+	public void limitSpendingToCategory(ExpensesModel expenses) {
+		float limit = expenses.getLimitToSpending();
+
+		if (expenses.getExpensesValue() > expenses.getLimitToSpending()) {
+			logger.error(LIMIT_EXCEEDED);
 		}
 	}
 

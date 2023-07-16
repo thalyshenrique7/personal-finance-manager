@@ -12,8 +12,10 @@ import com.devthalys.personalfinancemanager.models.ExpensesModel;
 public interface ExpensesService {
 
 	public List<ExpensesModel> findAll();
-	
+
 	public Optional<ExpensesModel> findById(UUID id);
-	
+
 	public void saveExpenses(ExpensesModel expenses);
+
+	public void updateExpenses(ExpensesModel expenses);
 }
