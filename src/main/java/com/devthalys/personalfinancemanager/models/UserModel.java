@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -45,7 +44,6 @@ public class UserModel implements Serializable {
 	private float addValueToWallet;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	
 	private List<ExpensesModel> expenses;
 
 	public UserModel() {}
