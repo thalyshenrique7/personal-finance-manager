@@ -14,12 +14,7 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
-//	@Override
-//	public Optional<UserModel> findUserFetchExpenses(UUID id) {
-//		return userRepository.findUserFetchExpenses(id);
-//	}
-	
+
 	@Override
 	public UserModel getUserByCpf(String cpf) {
 		return this.userRepository.getUserByCpf(cpf);

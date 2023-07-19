@@ -1,1 +1,0 @@
-alter table users change id_user id_user binary(16);

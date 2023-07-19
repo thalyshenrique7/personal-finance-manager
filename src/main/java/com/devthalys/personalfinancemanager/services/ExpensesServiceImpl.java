@@ -3,7 +3,6 @@ package com.devthalys.personalfinancemanager.services;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +35,7 @@ public class ExpensesServiceImpl implements ExpensesService {
 	}
 
 	@Override
-	public Optional<ExpensesModel> findById(UUID id) {
+	public Optional<ExpensesModel> findById(Long id) {
 		return expensesRepository.findById(id);
 	}
 
@@ -50,6 +49,7 @@ public class ExpensesServiceImpl implements ExpensesService {
 		expenses.setUser(user);
 		expenses.setExpensesDate(LocalDateTime.now());
 		calculateWalletToExpenses(expenses, user);
+		warnAboutWallet(user);
 
 		expensesRepository.save(expenses);
 	}
@@ -58,6 +58,7 @@ public class ExpensesServiceImpl implements ExpensesService {
 	public void updateExpenses(ExpensesModel expenses) {
 		calculateWalletToExpenses(expenses, expenses.getUser());
 		limitSpendingToCategory(expenses);
+		warnAboutWallet(expenses.getUser());
 		expensesRepository.save(expenses);
 	}
 
@@ -75,7 +76,13 @@ public class ExpensesServiceImpl implements ExpensesService {
 		float limit = expenses.getLimitToSpending();
 
 		if (expenses.getExpensesValue() > expenses.getLimitToSpending()) {
-			logger.error(LIMIT_EXCEEDED);
+			logger.error(LIMIT_EXCEEDED + limit);
+		}
+	}
+	
+	public void warnAboutWallet(UserModel user) {
+		if(user.getWallet() < 100) {
+			System.out.println("Wallet less than 100 credits. If you want, you can add more credits in you wallet!");
 		}
 	}
 

@@ -2,7 +2,6 @@ package com.devthalys.personalfinancemanager.models;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -21,8 +20,8 @@ public class UserModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID idUser;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idUser;
 	
 	@Column
 	private String firstName;
@@ -44,11 +43,15 @@ public class UserModel implements Serializable {
 	private float addValueToWallet;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnore
 	private List<ExpensesModel> expenses;
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<GoalModel> goals;
 
 	public UserModel() {}
 
-	public UserModel(UUID idUser, String firstName, String lastName, int age, String cpf, float wallet) {
+	public UserModel(Long idUser, String firstName, String lastName, int age, String cpf, float wallet) {
 		super();
 		this.idUser = idUser;
 		this.firstName = firstName;
@@ -58,11 +61,11 @@ public class UserModel implements Serializable {
 		this.wallet = wallet;
 	}
 
-	public UUID getIdUser() {
+	public Long getIdUser() {
 		return idUser;
 	}
 
-	public void setIdUser(UUID idUser) {
+	public void setIdUser(Long idUser) {
 		this.idUser = idUser;
 	}
 

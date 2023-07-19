@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +23,9 @@ import com.devthalys.personalfinancemanager.services.ExpensesServiceImpl;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
+@CrossOrigin(value = "*")
 @RestController
-@RequestMapping(value = "/expenses")
+@RequestMapping(value = "/api/expenses")
 public class ExpensesController {
 
 	@Autowired
@@ -37,7 +39,7 @@ public class ExpensesController {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public Optional<ExpensesModel> findById(@PathVariable UUID id) {
+	public Optional<ExpensesModel> findById(@PathVariable Long id) {
 		return expensesServiceImpl.findById(id);
 	}
 
@@ -51,7 +53,7 @@ public class ExpensesController {
 	@Transactional
 	@RequestMapping(value = "/update/expenses/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void updateExpenses(@PathVariable UUID id, @RequestBody @Valid UpdateExpensesDTO updateExpenses) {
+	public void updateExpenses(@PathVariable Long id, @RequestBody @Valid UpdateExpensesDTO updateExpenses) {
 		ExpensesModel findId = expensesServiceImpl.findById(id).orElse(null);
 
 		if (findId == null) {

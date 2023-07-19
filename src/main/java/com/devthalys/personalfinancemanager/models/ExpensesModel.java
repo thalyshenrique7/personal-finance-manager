@@ -2,11 +2,9 @@ package com.devthalys.personalfinancemanager.models;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import com.devthalys.personalfinancemanager.enums.ExpensesCategory;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +24,7 @@ public class ExpensesModel implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID idExpenses;
+	private Long idExpenses;
 	
 	@Column
 	private String expensesName;
@@ -56,7 +54,7 @@ public class ExpensesModel implements Serializable {
 	
 	public ExpensesModel() {}
 
-	public ExpensesModel(UUID idExpenses, String expensesName, ExpensesCategory expensesCategory, float expensesValue,
+	public ExpensesModel(Long idExpenses, String expensesName, ExpensesCategory expensesCategory, float expensesValue,
 			LocalDateTime expensesDate, String expensesDescription, UserModel user) {
 		super();
 		this.idExpenses = idExpenses;
@@ -68,11 +66,11 @@ public class ExpensesModel implements Serializable {
 		this.user = user;
 	}
 
-	public UUID getIdExpenses() {
+	public Long getIdExpenses() {
 		return idExpenses;
 	}
 
-	public void setIdExpenses(UUID idExpenses) {
+	public void setIdExpenses(Long idExpenses) {
 		this.idExpenses = idExpenses;
 	}
 

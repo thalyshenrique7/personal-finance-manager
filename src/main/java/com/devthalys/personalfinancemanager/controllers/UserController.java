@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +22,9 @@ import com.devthalys.personalfinancemanager.services.UserServiceImpl;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
+@CrossOrigin(value = "*")
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/api/users")
 public class UserController {
 
 	@Autowired
@@ -33,15 +35,6 @@ public class UserController {
 	public List<UserModel> findAll() {
 		return userServiceImpl.findAll();
 	}
-
-//	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//	public UserModel findByUserFetchExpenses(@PathVariable UUID id) {
-//		return userServiceImpl.findUserFetchExpenses(id)
-//				.map(user -> {
-//					user.getIdUser();
-//					return user;
-//				}).orElseThrow(() -> new UserNotFoundException("User not found."));
-//	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public UserModel getUserByCpf(@PathVariable String cpf) {
