@@ -1,4 +1,8 @@
 export interface User {
     _id: number;
-    name: string;
+    firstName: string;
+    lastName: string;
+    age: number;
+    cpf: string;
+    wallet: number;
 }
