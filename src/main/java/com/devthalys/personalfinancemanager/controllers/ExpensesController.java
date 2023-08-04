@@ -49,6 +49,14 @@ public class ExpensesController {
 	public void saveExpenses(@RequestBody ExpensesModel expenses) {
 		expensesServiceImpl.saveExpenses(expenses);
 	}
+	
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void deleteExpenses(@PathVariable Long id) {
+		ExpensesModel findId = expensesServiceImpl.findById(id).orElseThrow(null);
+		
+		expensesServiceImpl.delete(findId);
+	}
 
 	@Transactional
 	@RequestMapping(value = "/update/expenses/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)

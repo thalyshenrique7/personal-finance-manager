@@ -86,4 +86,9 @@ public class ExpensesServiceImpl implements ExpensesService {
 		}
 	}
 
+	@Override
+	public void delete(ExpensesModel expenses) {
+		expensesRepository.delete(expenses);
+	}
+
 }

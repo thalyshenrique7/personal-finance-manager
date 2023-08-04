@@ -15,6 +15,8 @@ public interface ExpensesService {
 	public Optional<ExpensesModel> findById(Long id);
 
 	public void saveExpenses(ExpensesModel expenses);
+	
+	public void delete(ExpensesModel expenses);
 
 	public void updateExpenses(ExpensesModel expenses);
 }
